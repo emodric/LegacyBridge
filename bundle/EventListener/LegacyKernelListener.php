@@ -6,7 +6,6 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-
 namespace eZ\Bundle\EzPublishLegacyBundle\EventListener;
 
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
@@ -26,14 +25,14 @@ class LegacyKernelListener extends ContainerAware implements EventSubscriberInte
     {
         return [
             LegacyEvents::PRE_RESET_LEGACY_KERNEL => 'onKernelReset',
-            ConsoleEvents::COMMAND => 'onConsoleCommand'
+            ConsoleEvents::COMMAND => 'onConsoleCommand',
         ];
     }
 
-    public function onKernelReset( PreResetLegacyKernelEvent $event )
+    public function onKernelReset(PreResetLegacyKernelEvent $event)
     {
         $event->getLegacyKernel()->runCallback(
-            function() {
+            function () {
                 eZINI::resetAllInstances();
             },
             true,
@@ -41,11 +40,11 @@ class LegacyKernelListener extends ContainerAware implements EventSubscriberInte
         );
     }
 
-    public function onConsoleCommand( ConsoleCommandEvent $event )
+    public function onConsoleCommand(ConsoleCommandEvent $event)
     {
-        $legacyHandlerCLI = $this->container->get( 'ezpublish_legacy.kernel_handler.cli' );
-        $this->container->set( 'ezpublish_legacy.kernel.lazy', null );
-        $this->container->set( 'ezpublish_legacy.kernel_handler', $legacyHandlerCLI );
-        $this->container->set( 'ezpublish_legacy.kernel_handler.web', $legacyHandlerCLI );
+        $legacyHandlerCLI = $this->container->get('ezpublish_legacy.kernel_handler.cli');
+        $this->container->set('ezpublish_legacy.kernel.lazy', null);
+        $this->container->set('ezpublish_legacy.kernel_handler', $legacyHandlerCLI);
+        $this->container->set('ezpublish_legacy.kernel_handler.web', $legacyHandlerCLI);
     }
 }
